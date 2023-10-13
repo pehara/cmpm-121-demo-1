@@ -58,3 +58,29 @@ function animate(time: number) {
 }
 
 animate(0);
+
+// Step 5
+
+// Adding an upgrade button
+const upgradeButton = document.createElement("button");
+upgradeButton.innerHTML = "Purchase Upgrade (Cost: 10 hearts)";
+upgradeButton.disabled = true; // Disable button initially
+app.append(upgradeButton);
+
+// Adding a click event listener to the upgrade button
+upgradeButton.addEventListener("click", () => {
+  if (counter >= 10) {
+    counter -= 10; // Deduct 10 units from the counter
+    updateCounter();
+    // Increment the growth rate by 1
+    setInterval(() => {
+      counter += 1 / 60; // Increment by 1/60 units per second
+      updateCounter();
+    }, 1000);
+  }
+});
+
+// Enable the upgrade button when the player has at least 10 units
+setInterval(() => {
+  upgradeButton.disabled = counter < 10;
+}, 100);
