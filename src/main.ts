@@ -16,3 +16,17 @@ app.append(header);
 const button = document.createElement("button");
 button.innerHTML = "( ˘▽˘)っ❤️";
 app.append(button);
+
+// Step 2
+
+// Adding a div for the counter
+const counterDiv = document.createElement("div");
+let counter: number = 0;
+counterDiv.innerHTML = `${counter} hearts`;
+app.append(counterDiv);
+
+// Adding a click event listener to the button to increase the counter
+button.addEventListener("click", () => {
+  counter++;
+  counterDiv.innerHTML = `${counter} hearts`;
+});
