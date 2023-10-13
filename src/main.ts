@@ -28,5 +28,18 @@ app.append(counterDiv);
 // Adding a click event listener to the button to increase the counter
 button.addEventListener("click", () => {
   counter++;
-  counterDiv.innerHTML = `${counter} hearts`;
+  updateCounter();
 });
+
+// Function to update the counter and display
+function updateCounter() {
+  counterDiv.innerHTML = `${counter} hearts`;
+}
+
+// Step 3
+
+// Increment the counter every second using setInterval
+setInterval(() => {
+  counter++;
+  updateCounter();
+}, 1000);
