@@ -22,12 +22,13 @@ app.append(button);
 // Adding a div for the counter
 const counterDiv = document.createElement("div");
 let counter: number = 0;
+let growthRate: number = 0; // Initialize growth rate to zero for step 5
 counterDiv.innerHTML = `${Math.floor(counter)} hearts`; // Round down to the nearest whole number
 app.append(counterDiv);
 
 // Adding a click event listener to the button to increase the counter
 button.addEventListener("click", () => {
-  counter++;
+  counter += 1 + growthRate; // Increment by 1 unit plus the growth rate
   updateCounter();
 });
 
@@ -40,7 +41,7 @@ function updateCounter() {
 
 // Increment the counter every second using setInterval
 setInterval(() => {
-  counter += 1; // Increment by 1 unit per second
+  counter += growthRate; // Increment by the growth rate
   updateCounter();
 }, 1000);
 
@@ -51,7 +52,7 @@ let lastTime = 0;
 
 function animate(time: number) {
   const deltaTime = (time - lastTime) / 1000; // Convert milliseconds to seconds
-  counter += deltaTime; // Increment based on elapsed time
+  counter += deltaTime * growthRate; // Increment based on elapsed time and growth rate
   updateCounter();
   lastTime = time;
   requestAnimationFrame(animate);
@@ -71,12 +72,8 @@ app.append(upgradeButton);
 upgradeButton.addEventListener("click", () => {
   if (counter >= 10) {
     counter -= 10; // Deduct 10 units from the counter
+    growthRate += 1; // Increment the growth rate by 1
     updateCounter();
-    // Increment the growth rate by 1
-    setInterval(() => {
-      counter += 1 / 60; // Increment by 1/60 units per second
-      updateCounter();
-    }, 1000);
   }
 });
 
