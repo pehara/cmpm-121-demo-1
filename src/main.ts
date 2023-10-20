@@ -4,12 +4,15 @@ interface Item {
   name: string;
   cost: number;
   rate: number;
+  description: string;
 }
 
 const availableItems: Item[] = [
-  { name: "Small Heart ˖⁺‧₊˚ ♡ ˚₊‧⁺˖", cost: 10, rate: 0.1 },
-  { name: "Big Heart <𝟑.𖥔 ݁ ˖", cost: 100, rate: 2 },
-  { name: "Astronomically Large Heart ⋆ ˚｡⋆୨♡୧⋆ ˚｡⋆", cost: 1000, rate: 50 },
+  { name: "Small Heart ˖⁺‧₊˚ ♡ ˚₊‧⁺˖", cost: 10, rate: 0.1, description: "A tiny heart to start your journey" },
+  { name: "Big Heart <𝟑.𖥔 ݁ ˖", cost: 100, rate: 2, description: "A bigger heart to show more love" },
+  { name: "Astronomically Large Heart ⋆ ˚｡⋆୨♡୧⋆ ˚｡⋆", cost: 1000, rate: 50, description: "The grand heart of the universe" },
+  { name: "Giant Rainbow Heart ⋆｡ﾟ☁︎｡⋆｡ ﾟ☾ ﾟ｡⋆", cost: 5000, rate: 200, description: "A heart that radiates love in all colors " },
+  { name: "Golden Heart ʚ♡ɞ ", cost: 10000, rate: 500, description: "A heart as precious as gold" },
 ];
 
 const app: HTMLDivElement = document.querySelector("#app")!;
@@ -74,9 +77,9 @@ button.addEventListener("click", () => {
 
 // Step 6
 
-// Adding upgrade buttons for items A, B, and C with a heart theme
+// Adding upgrade buttons for items A, B, C with a heart theme
 const upgradeButtons: HTMLButtonElement[] = [];
-const itemCounts: number[] = [0, 0, 0]; // Initialize counts for items A, B, C
+const itemCounts: number[] = Array.from({ length: availableItems.length }, () => 0); // Initialize counts for all items
 
 // Create and append itemCountsDiv to the body
 const itemCountsDiv = document.createElement("div");
@@ -85,7 +88,7 @@ document.body.appendChild(itemCountsDiv);
 
 for (let i = 0; i < availableItems.length; i++) {
   const upgradeButton = document.createElement("button");
-  upgradeButton.innerHTML = `❤️ Purchase ${availableItems[i].name} (Cost: ${availableItems[i].cost} hearts, Rate: ${availableItems[i].rate.toFixed(1)} hearts/sec)`;
+  upgradeButton.innerHTML = `❤️ Purchase ${availableItems[i].name} (Cost: ${availableItems[i].cost} hearts, Rate: ${availableItems[i].rate.toFixed(1)} hearts/sec) - ${availableItems[i].description}`;
   upgradeButton.disabled = true;
   app.append(upgradeButton);
   upgradeButtons.push(upgradeButton);
@@ -163,6 +166,6 @@ for (let i = 0; i < availableItems.length; i++) {
 function updateUpgradeButtons() {
   for (let i = 0; i < availableItems.length; i++) {
     const upgradeButton = upgradeButtons[i];
-    upgradeButton.innerHTML = `❤️ Purchase ${availableItems[i].name} (Cost: ${availableItems[i].cost.toFixed(1)} hearts, Rate: ${availableItems[i].rate.toFixed(1)} hearts/sec)`;
+    upgradeButton.innerHTML = `❤️ Purchase ${availableItems[i].name} (Cost: ${availableItems[i].cost.toFixed(1)} hearts, Rate: ${availableItems[i].rate.toFixed(1)} hearts/sec) - ${availableItems[i].description}`;
   }
 }
