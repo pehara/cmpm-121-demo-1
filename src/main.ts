@@ -1,5 +1,17 @@
 import "./style.css";
 
+interface Item {
+  name: string;
+  cost: number;
+  rate: number;
+}
+
+const availableItems: Item[] = [
+  { name: "Small Heart ˖⁺‧₊˚ ♡ ˚₊‧⁺˖", cost: 10, rate: 0.1 },
+  { name: "Big Heart <𝟑.𖥔 ݁ ˖", cost: 100, rate: 2 },
+  { name: "Astronomically Large Heart ⋆ ˚｡⋆୨♡୧⋆ ˚｡⋆", cost: 1000, rate: 50 },
+];
+
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "❤︎₊ ⊹ Heart Clicker ⊹₊❤︎";
@@ -66,29 +78,23 @@ button.addEventListener("click", () => {
 const upgradeButtons: HTMLButtonElement[] = [];
 const itemCounts: number[] = [0, 0, 0]; // Initialize counts for items A, B, C
 
-const items = [
-  { cost: 10, rate: 0.1 },
-  { cost: 100, rate: 2.0 },
-  { cost: 1000, rate: 50.0 },
-];
-
 // Create and append itemCountsDiv to the body
 const itemCountsDiv = document.createElement("div");
 itemCountsDiv.id = "itemCounts";
 document.body.appendChild(itemCountsDiv);
 
-for (let i = 0; i < items.length; i++) {
+for (let i = 0; i < availableItems.length; i++) {
   const upgradeButton = document.createElement("button");
-  upgradeButton.innerHTML = `❤️ Purchase ${getHeartSize(i)} (Cost: ${items[i].cost} hearts, Rate: ${items[i].rate.toFixed(1)} hearts/sec)`;
+  upgradeButton.innerHTML = `❤️ Purchase ${availableItems[i].name} (Cost: ${availableItems[i].cost} hearts, Rate: ${availableItems[i].rate.toFixed(1)} hearts/sec)`;
   upgradeButton.disabled = true;
   app.append(upgradeButton);
   upgradeButtons.push(upgradeButton);
 
   // Step 4
   upgradeButton.addEventListener("click", () => {
-    if (counter >= items[i].cost) {
-      counter -= items[i].cost;
-      growthRate += items[i].rate;
+    if (counter >= availableItems[i].cost) {
+      counter -= availableItems[i].cost;
+      growthRate += availableItems[i].rate;
       itemCounts[i]++; // Increment the count for the purchased item
       updateCounter();
       updateGrowthRate();
@@ -99,8 +105,8 @@ for (let i = 0; i < items.length; i++) {
 
 // Enable the upgrade buttons when the player has enough units
 setInterval(() => {
-  for (let i = 0; i < items.length; i++) {
-    upgradeButtons[i].disabled = counter < items[i].cost;
+  for (let i = 0; i < availableItems.length; i++) {
+    upgradeButtons[i].disabled = counter < availableItems[i].cost;
   }
 }, 100);
 
@@ -121,8 +127,8 @@ function updateItemCounts() {
     itemCountsDiv.innerHTML = ""; // Clear previous content
 
     // Display the counts for each item
-    for (let i = 0; i < items.length; i++) {
-      const itemDisplay = `${getHeartSize(i)} Count: ${itemCounts[i]}`;
+    for (let i = 0; i < availableItems.length; i++) {
+      const itemDisplay = `${availableItems[i].name} Count: ${itemCounts[i]}`;
       itemCountsDiv.innerHTML += `<div>${itemDisplay}</div>`;
     }
   }
@@ -136,15 +142,15 @@ function calculateNewCost(cost: number): number {
 }
 
 // Update the upgrade buttons with dynamic costs
-for (let i = 0; i < items.length; i++) {
+for (let i = 0; i < availableItems.length; i++) {
   const upgradeButton = upgradeButtons[i];
 
   upgradeButton.addEventListener("click", () => {
-    if (counter >= items[i].cost) {
-      counter -= items[i].cost;
-      growthRate += items[i].rate;
+    if (counter >= availableItems[i].cost) {
+      counter -= availableItems[i].cost;
+      growthRate += availableItems[i].rate;
       itemCounts[i]++; // Increment the count for the purchased item
-      items[i].cost = calculateNewCost(items[i].cost); // Update the cost for the next purchase
+      availableItems[i].cost = calculateNewCost(availableItems[i].cost); // Update the cost for the next purchase
       updateCounter();
       updateGrowthRate();
       updateItemCounts();
@@ -155,22 +161,8 @@ for (let i = 0; i < items.length; i++) {
 
 // Function to update the text on the upgrade buttons
 function updateUpgradeButtons() {
-  for (let i = 0; i < items.length; i++) {
+  for (let i = 0; i < availableItems.length; i++) {
     const upgradeButton = upgradeButtons[i];
-    upgradeButton.innerHTML = `❤️ Purchase ${getHeartSize(i)} (Cost: ${items[i].cost.toFixed(1)} hearts, Rate: ${items[i].rate.toFixed(1)} hearts/sec)`;
-  }
-}
-
-// Function to get heart size based on index
-function getHeartSize(index: number): string {
-  switch (index) {
-    case 0:
-      return "Small Heart ˖⁺‧₊˚ ♡ ˚₊‧⁺˖";
-    case 1:
-      return "Big Heart <𝟑.𖥔 ݁ ˖";
-    case 2:
-      return "Astronomically Large Heart ⋆ ˚｡⋆୨♡୧⋆ ˚｡⋆";
-    default:
-      return "";
+    upgradeButton.innerHTML = `❤️ Purchase ${availableItems[i].name} (Cost: ${availableItems[i].cost.toFixed(1)} hearts, Rate: ${availableItems[i].rate.toFixed(1)} hearts/sec)`;
   }
 }
